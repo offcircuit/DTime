@@ -18,12 +18,11 @@ class DTime {
       decode();
     };
     DTime(unsigned short Y, byte M, byte D, byte h, byte m, byte s);
-    DTime(unsigned short Y, byte M, byte D, byte h, byte m, byte s);
-    
-    bool setDate(unsigned short Y, byte M, byte D);
-    bool setTime(byte h, byte m, byte s);
-    void setTimestamp(unsigned long t);
-    void tick();
+
+    DTime setDate(unsigned short Y, byte M, byte D);
+    DTime setTime(byte h, byte m, byte s);
+    DTime setTimestamp(unsigned long t);
+    DTime tick();
 
   private:
     unsigned long _timestamp = 0;
