@@ -9,7 +9,7 @@
 
 class DTime {
   public:
-    const unsigned long& timestamp = _timestamp;
+    const unsigned long &timestamp = _timestamp;
     const unsigned short &year = _year;
     const byte &month = _month, &weekday = _weekday, &day = _day, &hour = _hour, &minute = _minute, &second = _second;
 
@@ -21,10 +21,10 @@ class DTime {
     
     bool setDate(unsigned short Y, byte M, byte D);
     bool setTime(byte h, byte m, byte s);
-    bool setTimestamp(unsigned long t);
+    void setTimestamp(unsigned long t);
     void tick();
 
-    DTime& operator = (const DTime& dtime) {
+    DTime &operator = (const DTime &dtime) {
       _timestamp = dtime._timestamp;
       _year = dtime._year;
       _month = dtime._month;
@@ -44,7 +44,5 @@ class DTime {
     void encode();
     bool isLeapYear(unsigned short Y);
 };
-
-
 
 #endif
