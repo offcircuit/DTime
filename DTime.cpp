@@ -3,7 +3,7 @@
 // PUBLIC
 
 DTime::DTime(unsigned short Y, byte M, byte D, byte h, byte m, byte s) {
-  if (!((Y < 0) || (Y > 0xFFFF) || (M < 1) || (M > 12) || (D < 1) || (h < 0) || (h > 23) || (m < 0) || (m > 59) || (s < 0) || (s > 59))) {
+  if (!((M < 1) || (M > 12) || (D < 1) || (h < 0) || (h > 23) || (m < 0) || (m > 59) || (s < 0) || (s > 59))) {
     byte n[12] = {31, 28 + isLeapYear(Y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     if (D <= n[M - 1]) {
       _year = Y;
@@ -17,35 +17,40 @@ DTime::DTime(unsigned short Y, byte M, byte D, byte h, byte m, byte s) {
   }
 }
 
-bool DTime::setDate(unsigned short Y, byte M, byte D) {
-  if ((Y < 0) || (Y > 0xFFFF) || (M < 1) || (M > 12) || (D < 1)) return false;
-  byte n[12] = {31, 28 + isLeapYear(Y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-  if (D > n[M - 1]) return false;
-  _year = Y;
-  _month = M;
-  _day = D;
-  encode();
-  _weekday = (_timestamp - (_timestamp % 86400UL) + 4) % 7;
-  return true;
+DTime DTime::setDate(unsigned short Y, byte M, byte D) {
+  if (!((M < 1) || (M > 12) || (D < 1))) {
+    byte n[12] = {31, 28 + isLeapYear(Y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if (D <= n[M - 1]) {
+      _year = Y;
+      _month = M;
+      _day = D;
+      encode();
+      _weekday = (_timestamp - (_timestamp % 86400UL) + 4) % 7;
+    }
+  }
+  return *this;
 }
 
-bool DTime::setTime(byte h, byte m, byte s) {
-  if ((h < 0) || (h > 23) || (m < 0) || (m > 59) || (s < 0) || (s > 59)) return false;
-  _hour = h;
-  _minute = m;
-  _second = s;
-  encode();
-  return true;
+DTime DTime::setTime(byte h, byte m, byte s) {
+  if (!((h < 0) || (h > 23) || (m < 0) || (m > 59) || (s < 0) || (s > 59))) {
+    _hour = h;
+    _minute = m;
+    _second = s;
+    encode();
+  }
+  return *this;
 }
 
-void DTime::setTimestamp(unsigned long t) {
+DTime DTime::setTimestamp(unsigned long t) {
   _timestamp = t;
   decode();
+  return *this;
 }
 
-void DTime::tick() {
+DTime DTime::tick() {
   _timestamp++;
   decode();
+  return *this;
 }
 
 //PRIVATE
@@ -63,11 +68,10 @@ void DTime::decode() {
 }
 
 void DTime::encode() {
-  _timestamp = 0;
+  _timestamp = ((_day - 1) * 86400UL) + (_hour * 3600UL) + (_minute * 60UL) + _second;
   byte n[12] = {31, 28 + isLeapYear(_year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
   for (byte M = _month; 1 < M; M--) _timestamp += (n[M - 2] * 86400UL);
   for (unsigned short Y = _year; 1970 < Y; Y--) _timestamp += ((isLeapYear(Y - 1) + 365) * 86400UL);
-  _timestamp += ((_day - 1) * 86400UL) + (_hour * 3600UL) + (_minute * 60UL) + _second;
 }
 
 bool DTime::isLeapYear(unsigned short Y) {
