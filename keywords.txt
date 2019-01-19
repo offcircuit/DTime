@@ -1,0 +1,31 @@
+###########################################
+# Syntax Coloring Map For Dtime-library
+###########################################
+
+###########################################
+# Datatypes			(KEYWORD1)
+###########################################
+
+DTime				(KEYWORD1)
+
+###########################################
+# Methods and Functions		(KEYWORD2)
+###########################################
+		
+setDate				KEYWORD2
+setTime				KEYWORD2
+setTimestamp			KEYWORD2
+tick				KEYWORD2
+
+###########################################
+# Constants			(LITERAL1)
+###########################################
+
+day				LITERAL1
+hour				LITERAL1
+minute				LITERAL1
+month				LITERAL1
+second				LITERAL1
+timestamp			LITERAL1
+year				LITERAL1
+
