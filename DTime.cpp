@@ -2,8 +2,6 @@
 
 // PUBLIC
 
-DTime::DTime() {}
-
 DTime::DTime(unsigned short Y, byte M, byte D, byte h, byte m, byte s) {
   if (!((Y < 0) || (Y > 0xFFFF) || (M < 1) || (M > 12) || (D < 1) || (h < 0) || (h > 23) || (m < 0) || (m > 59) || (s < 0) || (s > 59))) {
     byte m[12] = {31, 28 + isLeapYear(Y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
