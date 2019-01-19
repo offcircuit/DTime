@@ -25,18 +25,6 @@ class DTime {
     void setTimestamp(unsigned long t);
     void tick();
 
-    DTime &operator = (const DTime &dtime) {
-      _timestamp = dtime._timestamp;
-      _year = dtime._year;
-      _month = dtime._month;
-      _weekday = dtime._weekday;
-      _day = dtime._day;
-      _hour = dtime._hour;
-      _minute = dtime._minute;
-      _second = dtime._second;
-      return *this;
-    }
-
   private:
     unsigned long _timestamp = 0;
     unsigned short _year = 1970;
