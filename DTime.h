@@ -13,10 +13,11 @@ class DTime {
     const unsigned short &year = _year;
     const byte &month = _month, &weekday = _weekday, &day = _day, &hour = _hour, &minute = _minute, &second = _second;
 
-    DTime();
+    explicit DTime() {};
     explicit DTime(unsigned long t): _timestamp(t) {
       decode();
     };
+    DTime(unsigned short Y, byte M, byte D, byte h, byte m, byte s);
     DTime(unsigned short Y, byte M, byte D, byte h, byte m, byte s);
     
     bool setDate(unsigned short Y, byte M, byte D);
