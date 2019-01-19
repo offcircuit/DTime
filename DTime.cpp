@@ -4,8 +4,8 @@
 
 DTime::DTime(unsigned short Y, byte M, byte D, byte h, byte m, byte s) {
   if (!((Y < 0) || (Y > 0xFFFF) || (M < 1) || (M > 12) || (D < 1) || (h < 0) || (h > 23) || (m < 0) || (m > 59) || (s < 0) || (s > 59))) {
-    byte m[12] = {31, 28 + isLeapYear(Y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    if (D <= m[M - 1]) {
+    byte n[12] = {31, 28 + isLeapYear(Y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if (D <= n[M - 1]) {
       _year = Y;
       _month = M;
       _day = D;
@@ -19,8 +19,8 @@ DTime::DTime(unsigned short Y, byte M, byte D, byte h, byte m, byte s) {
 
 bool DTime::setDate(unsigned short Y, byte M, byte D) {
   if ((Y < 0) || (Y > 0xFFFF) || (M < 1) || (M > 12) || (D < 1)) return false;
-  byte m[12] = {31, 28 + isLeapYear(Y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-  if (D > m[M - 1]) return false;
+  byte n[12] = {31, 28 + isLeapYear(Y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+  if (D > n[M - 1]) return false;
   _year = Y;
   _month = M;
   _day = D;
@@ -38,7 +38,7 @@ bool DTime::setTime(byte h, byte m, byte s) {
   return true;
 }
 
-bool DTime::setTimestamp(unsigned long t) {
+void DTime::setTimestamp(unsigned long t) {
   _timestamp = t;
   decode();
 }
@@ -57,15 +57,15 @@ void DTime::decode() {
   _hour = (t /= 60) % 24;
   _weekday = (((t /= 24) + 4) % 7);
   for (_year = 1970; t > (365 + isLeapYear(_year)); _year++) t -= (365 + isLeapYear(_year));
-  byte m[12] = {31, 28 + isLeapYear(_year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-  for (_month = 1; t >= m[_month - 1]; _month++) t -= m[_month - 1];
+  byte n[12] = {31, 28 + isLeapYear(_year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+  for (_month = 1; t >= n[_month - 1]; _month++) t -= n[_month - 1];
   _day = t + 1;
 }
 
 void DTime::encode() {
   _timestamp = 0;
-  byte m[12] = {31, 28 + isLeapYear(_year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-  for (byte M = _month; 1 < M; M--) _timestamp += (m[M - 2] * 86400UL);
+  byte n[12] = {31, 28 + isLeapYear(_year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+  for (byte M = _month; 1 < M; M--) _timestamp += (n[M - 2] * 86400UL);
   for (unsigned short Y = _year; 1970 < Y; Y--) _timestamp += ((isLeapYear(Y - 1) + 365) * 86400UL);
   _timestamp += ((_day - 1) * 86400UL) + (_hour * 3600UL) + (_minute * 60UL) + _second;
 }
