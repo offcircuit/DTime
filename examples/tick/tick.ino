@@ -7,7 +7,7 @@ uint64_t cycle;
 void setup() {
   Serial.begin(9600);
   delay(100);
-  cycle = millis() + 1000;
+  cycle = (uint64_t)millis() + 1000;
 }
 
 void loop() {
