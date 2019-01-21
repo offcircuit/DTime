@@ -3,7 +3,7 @@
 // PUBLIC
 
 DTime::DTime(unsigned short Y, byte M, byte D, byte h, byte m, byte s) {
-  if (!((Y < 1970) || (Y > 9999) || (M < 1) || (M > 12) || (D < 1) || (h < 0) || (h > 23) || (m < 0) || (m > 59) || (s < 0) || (s > 59))) {
+  if (!((Y < 1970) || (Y > 2100) || (M < 1) || (M > 12) || (D < 1) || (h < 0) || (h > 23) || (m < 0) || (m > 59) || (s < 0) || (s > 59))) {
     byte n[12] = {31, 28 + isLeapYear(Y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     if (D <= n[M - 1]) {
       _year = Y;
@@ -18,7 +18,7 @@ DTime::DTime(unsigned short Y, byte M, byte D, byte h, byte m, byte s) {
 }
 
 DTime DTime::setDate(unsigned short Y, byte M, byte D) {
-  if (!((Y < 1970) || (Y > 9999) || (M < 1) || (M > 12) || (D < 1))) {
+  if (!((Y < 1970) || (Y > 2100) || (M < 1) || (M > 12) || (D < 1))) {
     byte n[12] = {31, 28 + isLeapYear(Y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     if (D <= n[M - 1]) {
       _year = Y;
