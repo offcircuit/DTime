@@ -4,20 +4,6 @@ DTime dtime;
 
 uint64_t cycle;
 
-void setup() {
-  Serial.begin(9600);
-  delay(100);
-  cycle = (uint64_t)millis() + 1000;
-}
-
-void loop() {
-  if ((uint64_t)millis() >=  cycle) {
-    cycle += 1000;
-    dtime.tick();
-    sendData();
-  }
-}
-
 String decimate(byte b) {
   return ((b < 10) ? "0" : "") + String(b);
 }
@@ -43,4 +29,18 @@ void sendData() {
   Serial.print(":");
   Serial.println(decimate(dtime.second));
 
+}
+
+void setup() {
+  Serial.begin(9600);
+  delay(100);
+  cycle = (uint64_t)millis() + 1000;
+}
+
+void loop() {
+  if ((uint64_t)millis() >=  cycle) {
+    cycle += 1000;
+    dtime.tick();
+    sendData();
+  }
 }
