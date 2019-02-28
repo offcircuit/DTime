@@ -9,28 +9,28 @@
 
 class DTime {
   public:
-    const unsigned long &timestamp = _timestamp;
-    const unsigned short &year = _year;
-    const byte &month = _month, &weekday = _weekday, &day = _day, &hour = _hour, &minute = _minute, &second = _second;
+    const uint32_t &timestamp = _timestamp;
+    const uint16_t &year = _year;
+    const uint8_t &month = _month, &weekday = _weekday, &day = _day, &hour = _hour, &minute = _minute, &second = _second;
 
     explicit DTime() {};
-    explicit DTime(unsigned long t): _timestamp(t) {
+    explicit DTime(uint32_t t): _timestamp(t) {
       decode();
     };
-    DTime(unsigned short Y, byte M, byte D, byte h, byte m, byte s);
+    DTime(uint16_t Y, uint8_t M, uint8_t D, uint8_t h, uint8_t m, uint8_t s);
 
-    DTime setDate(unsigned short Y, byte M, byte D);
-    DTime setTime(byte h, byte m, byte s);
-    DTime setTimestamp(unsigned long t);
+    DTime setDate(uint16_t Y, uint8_t M, uint8_t D);
+    DTime setTime(uint8_t h, uint8_t m, uint8_t s);
+    DTime setTimestamp(uint32_t t);
     DTime tick();
 
   private:
-    unsigned long _timestamp = 0;
-    unsigned short _year = 1970;
-    byte _month = 1, _weekday = 4, _day = 1, _hour = 0, _minute = 0, _second = 0;
+    uint32_t _timestamp = 0;
+    uint16_t _year = 1970;
+    uint8_t _month = 1, _weekday = 4, _day = 1, _hour = 0, _minute = 0, _second = 0;
     void decode();
     void encode();
-    bool isLeapYear(unsigned short Y);
+    bool isLeapYear(uint16_t Y);
 };
 
 #endif
