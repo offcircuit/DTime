@@ -13,6 +13,7 @@ DTime::DTime(unsigned short Y, byte M, byte D, byte h, byte m, byte s) {
       _minute = m;
       _second = s;
       encode();
+      _weekday = (_timestamp - (_timestamp % 86400UL) + 4) % 7;
     }
   }
 }
