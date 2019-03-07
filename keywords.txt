@@ -1,31 +1,41 @@
-###########################################
+##################################################
 # Syntax Coloring Map For Dtime-library
-###########################################
+##################################################
 
-###########################################
-# Datatypes			(KEYWORD1)
-###########################################
+##################################################
+# Classes, datatypes and C++ keywords	(KEYWORD1)
+##################################################
 
-DTime				KEYWORD1
+DTime	KEYWORD1
 
-###########################################
-# Methods and Functions		(KEYWORD2)
-###########################################
+##################################################
+# Methods and Functions			(KEYWORD2)
+##################################################
 		
-setDate				KEYWORD2
-setTime				KEYWORD2
-setTimestamp			KEYWORD2
-tick				KEYWORD2
+setDate	KEYWORD2
+setTime	KEYWORD2
+setTimestamp	KEYWORD2
+tick	KEYWORD2
 
-###########################################
-# Constants			(LITERAL1)
-###########################################
+##################################################
+# Setup functions and Serial keywords	(KEYWORD3)
+##################################################
 
-day				LITERAL1
-hour				LITERAL1
-minute				LITERAL1
-month				LITERAL1
-second				LITERAL1
-timestamp			LITERAL1
-year				LITERAL1
+
+##################################################
+# Constants				(LITERAL1)
+##################################################
+
+
+##################################################
+# Built-in variables			(LITERAL2)
+##################################################
+
+day	LITERAL2
+hour	LITERAL2
+minute	LITERAL2
+month	LITERAL2
+second	LITERAL2
+timestamp	LITERAL2
+year	LITERAL2
 
