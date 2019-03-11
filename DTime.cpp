@@ -16,7 +16,7 @@ bool DTime::isLeapYear(uint16_t Y) {
 
 void DTime::outset(uint16_t outset) {
   _rebound = false;
-  _outset = min(outset, year);
+  _outset = min(outset, _year);
   encode();
 }
 
