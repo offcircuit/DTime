@@ -7,12 +7,13 @@
 #include "WProgram.h"
 #endif
 
-
 class DTime {
   public:
     const uint8_t &month = _month, &weekday = _weekday, &day = _day, &hour = _hour, &minute = _minute, &second = _second;
     const uint16_t &year = _year;
     const uint32_t &timestamp = _timestamp;
+      String w[7] = {"Domingo", "Segunda", "Terca", "Quarta", "Quinta", "Sexta", "Sabado"};
+
 
     explicit DTime() {};
     explicit DTime(uint32_t t): _timestamp(t) {
@@ -28,12 +29,12 @@ class DTime {
     bool isLeapYear(uint16_t Y);
     void outset(uint16_t outset);
     void rebound(bool rebound);
-    uint8_t wday(uint16_t Y, uint8_t M, uint16_t D);
+    uint8_t wday(uint16_t Y, uint8_t M, uint8_t D);
 
   private:
     bool _rebound = false;
-    uint8_t _month = 1, _weekday = wday(_outset, 1, 1), _day = 1, _hour = 0, _minute = 0, _second = 0;
-    uint16_t _outset = 1970, _year = _outset;
+    uint8_t _month = 1, _weekday = 4, _day = 1, _hour = 0, _minute = 0, _second = 0;
+    uint16_t _outset = 1970, _year = 1970;
     uint32_t _timestamp = 0;
 
     void decode();
