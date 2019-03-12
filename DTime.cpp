@@ -10,16 +10,6 @@ DTime::DTime(uint16_t Y, uint8_t M, uint8_t D, uint8_t h, uint8_t m, uint8_t s) 
   encode();
 }
 
-bool DTime::isLeapYear(uint16_t Y) {
-  return !((Y % 4) * (!(Y % 100) + (Y % 400)));
-}
-
-void DTime::outset(uint16_t outset) {
-  _rebound = false;
-  _outset = min(outset, _year);
-  encode();
-}
-
 void DTime::rebound(bool rebound) {
   _rebound = rebound;
   encode();
@@ -54,13 +44,6 @@ DTime DTime::tick() {
   return *this;
 }
 
-uint8_t DTime::wday(uint16_t Y, uint8_t M, uint8_t D) {
-  uint8_t n[12] = {31, 28 + isLeapYear(Y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-  Y = (D + (((Y - 1) * 365UL) + ((Y - 1) / 4) - ((Y - 1) / 100) + ((Y - 1) / 400))) % 7;
-  while (M > 1) Y += (n[--M - 1]);
-  return Y % 7;
-}
-
 void DTime::decode() {
   uint32_t t = _timestamp;
   _second = t % 60;
@@ -68,23 +51,14 @@ void DTime::decode() {
   _hour = (t /= 60) % 24;
 
   t /= 24;
-  for (_year = _outset; t >= (365 + isLeapYear(_year)); _year++) t -= (365 + isLeapYear(_year));
-
-  uint8_t n[12] = {31, 28 + isLeapYear(_year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-  for (_month = 1; t >= n[_month - 1]; _month++) t -= n[_month - 1];
+  for (_year = _outset; t >= (365 + DTIME_LEAP_YEAR(_year)); _year++) t -= (365 + DTIME_LEAP_YEAR(_year));
+  for (_month = 1; t >= DTIME_MONTH_DAYS(_year, _month); _month++) t -= DTIME_MONTH_DAYS(_year, _month);
 
   _day = t + 1;
-  _weekday = wday(_year, _month, _day);
+  _weekday = DTIME_WEEKDAY(_year, _month, _day);
 }
 
 void DTime::encode() {
-  if (_rebound) _outset = min(_outset, _year);
-
-  _timestamp = ((_day - 1) * 86400UL) + (_hour * 3600UL) + (_minute * 60UL) + _second;
-
-  uint8_t n[12] = {31, 28 + isLeapYear(_year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-  for (uint8_t M = _month; M > 1;) _timestamp += (n[--M - 1] * 86400UL);
-
-  for (uint16_t Y = _year; _outset < Y; Y--) _timestamp += ((isLeapYear(Y - 1) + 365) * 86400UL);
-  _weekday = wday(_year, _month, _day);
+  _timestamp = ((DTIME_DAYS_BETWEEN_YEARS((_rebound ? _outset : DTIME_OUTSET), _year) + DTIME_YEAR_DAYS_UNTIL(_year, _month) + (_day - 1)) * 86400UL) + (_hour * 3600UL) + (_minute * 60UL) + _second;
+  _weekday = DTIME_WEEKDAY(_year, _month, _day);
 }
