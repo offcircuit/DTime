@@ -45,7 +45,7 @@ DTime DTime::tick() {
 uint8_t DTime::wday(uint16_t Y, uint8_t M, uint8_t D) {
   uint8_t n[12] = {31, 28 + isLeapYear(Y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
   Y = (D + (((Y - 1) * 365UL) + ((Y - 1) / 4) - ((Y - 1) / 100) + ((Y - 1) / 400))) % 7;
-  while (M > 1) Y += (n[--M - 1]);
+  while (M > 1) Y += n[--M - 1];
   return Y % 7;
 }
 
