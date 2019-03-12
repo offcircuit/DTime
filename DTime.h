@@ -7,6 +7,13 @@
 #include "WProgram.h"
 #endif
 
+#define DTIME_DAYS_UNTIL(y) ({((((y) - 1) * 365UL) + (((y) - 1) / 4) - (((y) - 1) / 100) + (((y) - 1) / 400));})
+#define DTIME_DAYS_BETWEEN_YEARS(y1,y2) ({(DTIME_DAYS_UNTIL(((y1) > (y2)) ? (y1) : (y2)) - DTIME_DAYS_UNTIL(((y1) > (y2)) ? (y2) : (y1)));})
+#define DTIME_LEAP_YEAR(y) ({!(((y) % 4) * (!((y) % 100) + ((y) % 400)));})
+#define DTIME_MONTH_DAYS(y,m) ({const uint8_t n[12] = {31, 28 + DTIME_LEAP_YEAR(y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; n[(m) - 1];})
+#define DTIME_YEAR_DAYS_UNTIL(y,m) ({uint16_t d = 0; for(uint8_t i = 1; i < (m); i++) d += DTIME_MONTH_DAYS((y), i); d;})
+#define DTIME_WEEKDAY(y,m,d) ({(DTIME_DAYS_UNTIL(y) + DTIME_YEAR_DAYS_UNTIL((y), (m)) + (d)) % 7;})
+
 class DTime {
   public:
     const uint8_t &month = _month, &weekday = _weekday, &day = _day, &hour = _hour, &minute = _minute, &second = _second;
