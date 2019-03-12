@@ -9,9 +9,9 @@
 
 class DTime {
   public:
-    const uint32_t &timestamp = _timestamp;
-    const uint16_t &year = _year;
     const uint8_t &month = _month, &weekday = _weekday, &day = _day, &hour = _hour, &minute = _minute, &second = _second;
+    const uint16_t &year = _year;
+    const uint32_t &timestamp = _timestamp;
 
     explicit DTime() {};
     explicit DTime(uint32_t t): _timestamp(t) {
@@ -24,13 +24,16 @@ class DTime {
     DTime setTimestamp(uint32_t t);
     DTime tick();
 
+    bool isLeapYear(uint16_t Y);
+    uint8_t wday(uint16_t Y, uint8_t M, uint8_t D);
+
   private:
-    uint32_t _timestamp = 0;
-    uint16_t _year = 1970;
     uint8_t _month = 1, _weekday = 4, _day = 1, _hour = 0, _minute = 0, _second = 0;
+    uint16_t _year = 1970;
+    uint32_t _timestamp = 0;
+
     void decode();
     void encode();
-    bool isLeapYear(uint16_t Y);
 };
 
 #endif
