@@ -1,13 +1,15 @@
 #include "DTime.h"
 
-DTime c(1459468799), d(2019, 1, 18, 20, 57, 00), e;
+DTime c, d, e;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
 
-  delay(100);
-
+  c.setTimestamp(1459468799);
+  d.setDate(2019, 1, 18);
+  d.setTime(20, 57, 0);
+  
   Serial.print(e.weekday);
   Serial.print(", ");
   Serial.print(e.year);
