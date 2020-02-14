@@ -10,6 +10,29 @@ DTime::DTime(uint16_t Y, uint8_t M, uint8_t D, uint8_t h, uint8_t m, uint8_t s) 
   encode();
 }
 
+DTime::DTime(const DTime & z) {
+	_year = z.year;
+	_month = z.month;
+	_day = z.day;
+	_hour = z.hour;
+	_minute = z.minute;
+	_second = z.second;
+	_timestamp = z.timestamp;
+	_weekday = z.weekday;
+}
+
+DTime & DTime::operator=(const DTime & z) {
+	_year = z.year;
+	_month = z.month;
+	_day = z.day;
+	_hour = z.hour;
+	_minute = z.minute;
+	_second = z.second;
+	_timestamp = z.timestamp;
+	_weekday = z.weekday;
+	return *this;
+}
+
 bool DTime::isLeapYear(uint16_t Y) {
   return !((Y % 4) * (!(Y % 100) + (Y % 400)));
 }
